@@ -1,2 +1,59 @@
 /* // CSS Styling
 Apply CSS styles to panels and other game elements, including panel colors, button styles, and any additional visual elements.  */
+@keyframes flash {
+    0%   {opacity: 1;}
+    50%  {opacity: 0.1;}
+    100% {opacity: 1;}
+}
+
+#game {
+    width: 450px;
+    height: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Updated property */
+    align-items: center; /* Added property */
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.simon-button {
+    width: 100px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 50%/100%;
+
+
+    /* Added properties */
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+#button1 {
+    background: red;
+}
+
+#button2 {
+    background: blue;
+}
+
+#button3 {
+    background: green;
+}
+
+#button4 {
+    background: yellow;
+}
+
+#button5 {
+    background: purple;
+}
+
+#button6 {
+    background: orange;
+}
+
+.active {
+    animation: flash 0.6s;
+}

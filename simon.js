@@ -63,3 +63,90 @@
 // - Levels of difficulty: Introduce different difficulty levels that increase the complexity of the game, such as shorter timeouts or faster sequence display.
 // - User interface improvements: Add visual feedback for correct and incorrect user input, provide hints or instructions to guide the user, and incorporate animations or transitions to enhance the overall user experience. -->
 //  -->
+
+
+
+
+let sequence = [];
+let humanSequence = [];
+let level = 0;
+let gameStarted = false;
+let gameOver = false;
+
+// Define six different sounds
+const sounds = {
+    1: new Audio('camera_click.mp3'),
+    2: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
+    3: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
+    4: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3'),
+    5: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3'),
+    6: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3')
+};
+
+// Generate a random number from 1 to 6
+const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
+
+for (let i = 1; i <= 6; i++) {
+    document.getElementById(`button${i}`).addEventListener('click', () => {
+        if (gameStarted && !gameOver) {
+            humanSequence.push(i);
+            humanTurn(i);
+        }
+    });
+}
+
+document.getElementById('start-button').addEventListener('click', startGame);
+
+function startGame() {
+    sequence = [];
+    humanSequence = [];
+    level = 0;
+    gameStarted = true;
+    gameOver = false;
+    addToSequence();
+    playSequence();
+}
+
+function addToSequence() {
+    sequence.push(getRandomNumber());
+}
+
+const lightUp = (color) => {
+    const button = document.getElementById(`button${color}`);
+    button.classList.add('active');
+    setTimeout(() => {
+        button.classList.remove('active');
+    }, 1000);
+    setTimeout(() => sounds[color].play(), 500); // Delay added to synchronize with button light
+};
+
+const playSequence = () => {
+    sequence.forEach((color, index) => {
+        setTimeout(() => {
+            lightUp(color);
+        }, 1000 * (index + 1));
+    });
+};
+
+const humanTurn = (color) => {
+    if (humanSequence[humanSequence.length - 1] !== sequence[humanSequence.length - 1]) {
+        alert('Game over! You reached level ' + level + '.');
+        gameOver = true;
+        gameStarted = false;
+    } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
+        humanSequence = [];
+        level++;
+        addToSequence();
+        setTimeout(playSequence, 1000);
+    }
+};
+
+// Reduce the sound effects to 1 second
+Object.values(sounds).forEach(sound => {
+    sound.onloadeddata = function() {
+        const duration = sound.duration;
+        if (duration > 1.0) {
+            sound.playbackRate = duration;
+        }
+    };
+});
