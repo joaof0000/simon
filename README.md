@@ -3,7 +3,6 @@
 Simon Game
 A simple, but captivating web version of the classic Simon game. This implementation uses HTML5, CSS3, and JavaScript to provide an engaging and interactive user experience. The game's goal is to follow an increasing sequence of flashing colors. The sequence gets longer each time the player completes the sequence correctly. The game continues until the player fails to follow the sequence.
 
-Image of Game
 
 Features
 Six different sections each having distinct colors and sounds.
