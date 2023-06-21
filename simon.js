@@ -105,10 +105,13 @@ function startGame() {
     gameOver = false;
     addToSequence();
     playSequence();
+    renderScore();
+    renderGameStatus('');
 }
 
 function addToSequence() {
     sequence.push(getRandomNumber());
+    renderScore();
 }
 
 const lightUp = (color) => {
@@ -116,7 +119,7 @@ const lightUp = (color) => {
     button.classList.add('active');
     setTimeout(() => {
         button.classList.remove('active');
-    }, 1000);
+    }, 1500); // increased flash duration to 1.5 seconds
     setTimeout(() => sounds[color].play(), 500); // Delay added to synchronize with button light
 };
 
@@ -124,28 +127,34 @@ const playSequence = () => {
     sequence.forEach((color, index) => {
         setTimeout(() => {
             lightUp(color);
-        }, 1000 * (index + 1));
+        }, 2000 * (index + 1)); // increased delay between flashes to 2 seconds
     });
 };
 
 
-
-const humanTurn = (color) => {
+function humanTurn(color) {
     if (humanSequence[humanSequence.length - 1] !== sequence[humanSequence.length - 1]) {
-        alert('Game over! You reached level ' + level + '.');
         gameOver = true;
         gameStarted = false;
+        renderGameStatus(`Game over! You reached level ${level}.`);
     } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
         humanSequence = [];
         level++;
         if(level === 10){
-            alert('Awesome work! You have reached level 10.');
+            renderGameStatus('Awesome work! You have reached level 10.');
         }
         addToSequence();
         setTimeout(playSequence, 1000);
     }
-};
+}
 
+function renderGameStatus(message) {
+    document.getElementById('game-status').textContent = message;
+}
+
+function renderScore() {
+    document.getElementById('score').textContent = 'Score: ' + level;
+}
 
 // Reduce the sound effects to 1 second
 Object.values(sounds).forEach(sound => {
