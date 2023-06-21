@@ -6,9 +6,13 @@
     <title>Document</title>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <script defer src="simon.js"></script>
+    <audio id="sounds" src="camera_click.mp3" autoplay hidden></audio>
+
 </head>
 <body>
-    <div id="game">
+    <h1 id="title">SIMON</h1>
+    <div id="game-wrapper">
+
         <div id="game">
             <div class="simon-button" id="button1"></div>
             <div class="simon-button" id="button2"></div>
@@ -16,6 +20,10 @@
             <div class="simon-button" id="button4"></div>
             <div class="simon-button" id="button5"></div>
             <div class="simon-button" id="button6"></div>
-        </div>    
-    <button id="start-button">Start Game</button>
+        </div>
+        
+        <button id="start-button">Start Game</button>
+    </div>
+</body>
+
 </html>

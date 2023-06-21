@@ -75,7 +75,7 @@ let gameOver = false;
 
 // Define six different sounds
 const sounds = {
-    1: new Audio('camera_click.mp3'),
+    1: new Audio('camera_click.wav'),
     2: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
     3: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
     4: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3'),
@@ -128,6 +128,8 @@ const playSequence = () => {
     });
 };
 
+
+
 const humanTurn = (color) => {
     if (humanSequence[humanSequence.length - 1] !== sequence[humanSequence.length - 1]) {
         alert('Game over! You reached level ' + level + '.');
@@ -136,10 +138,14 @@ const humanTurn = (color) => {
     } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
         humanSequence = [];
         level++;
+        if(level === 10){
+            alert('Awesome work! You have reached level 10.');
+        }
         addToSequence();
         setTimeout(playSequence, 1000);
     }
 };
+
 
 // Reduce the sound effects to 1 second
 Object.values(sounds).forEach(sound => {

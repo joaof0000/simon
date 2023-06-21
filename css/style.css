@@ -1,57 +1,76 @@
-/* // CSS Styling
-Apply CSS styles to panels and other game elements, including panel colors, button styles, and any additional visual elements.  */
 @keyframes flash {
     0%   {opacity: 1;}
     50%  {opacity: 0.1;}
     100% {opacity: 1;}
 }
 
-#game {
-    width: 450px;
-    height: 400px;
-    margin: 0 auto;
+#game-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Updated property */
-    align-items: center; /* Added property */
-    border: 2px solid black;
-    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
 }
 
+#game {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    margin: 2in auto 20px; /* Adjust bottom margin as needed */
+    border-radius: 50%;
+    box-sizing: border-box;
+    transform: rotate(-30deg);
+}
+
+#start-button {
+    width: 100px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    margin-top: -50px; /* Adjust as needed */
+    align-self: center;
+    margin: 0 auto;
+}
+
+
 .simon-button {
-    width: 100px;
-    height: 150px;
-    margin: 10px;
-    border-radius: 50%/100%;
-
-
-    /* Added properties */
+    width: 50%;
+    height: 50%;
+    position: absolute;
     border: 2px solid black;
     box-sizing: border-box;
+    overflow: hidden;
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+
+:root {
+    --rotation-base: 60deg;
 }
 
 #button1 {
     background: red;
+    transform: rotate(0deg) translate(0, 100%);
 }
 
 #button2 {
     background: blue;
+    transform: rotate(60deg) translate(0, 100%);
 }
 
 #button3 {
     background: green;
+    transform: rotate(120deg) translate(0, 100%);
 }
 
 #button4 {
     background: yellow;
+    transform: rotate(180deg) translate(0, 100%);
 }
 
 #button5 {
     background: purple;
+    transform: rotate(240deg) translate(0, 100%);
 }
 
 #button6 {
     background: orange;
+    transform: rotate(300deg) translate(0, 100%);
 }
 
 .active {
