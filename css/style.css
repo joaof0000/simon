@@ -72,7 +72,7 @@
 }
 
 :root {
-    --rotation-base: 60deg;
+    --rotation-base: 30deg;
     --flash-speed: 1s; /* default speed */
 }
 

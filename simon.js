@@ -3,8 +3,9 @@ let humanSequence = [];
 let level = 0;
 let gameStarted = false;
 let gameOver = false;
-let turnTimeout;  
-
+let turnTimeout;
+const welcomeMessage = document.getElementById('welcome-message');  
+welcomeMessage.style.display = 'none'
 
 // Define six different sounds
 const sounds = {
@@ -45,7 +46,8 @@ function startGame() {
 }
 
 function renderWelcomeMessage() {
-    document.getElementById('welcome-message').textContent = 
+    welcomeMessage.style.display = 'block'
+    welcomeMessage.textContent = 
     "Welcome to Simon Game! You will see a sequence of buttons light up. Your task is to repeat the sequence by clicking the buttons in the same order. If you make a mistake, the game is over. The sequence gets one button longer each time you correctly repeat it. Good luck!";
 }
 
