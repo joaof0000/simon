@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Title -->
+    <title>Simon Game</title>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- JavaScript -->
     <script defer src="simon.js"></script>
-    <audio id="sounds" src="camera_click.mp3" autoplay hidden></audio>
 </head>
+
 <body>
+    <!-- Game Container -->
     <div id="game-container">
-        <h3>Welcome to the Simon Game</h3>
+        
+        <!-- Start Button -->
         <button id="start-button">Start Game</button>
+        
+        <!-- Welcome Message -->
         <div id="welcome-message"></div>
+        
+        <!-- Speed Selector -->
         <label for="flash-speed">Choose a speed for your game:</label>
         <select id="flash-speed">
             <option value="2">Slow</option>
             <option value="1.5">Normal</option>
             <option value="0.75">Fast</option>
         </select>
+        
+        <!-- Score Display -->
         <div id="score"></div>
+        
+        <!-- Game Status Display -->
         <div id="game-status"></div>
+        
+        <!-- High Score Display -->
+        <div id="high-score"></div>
+        
+        <!-- Simon Game Buttons -->
         <div id="game">
             <div class="simon-button" id="button1"></div>
             <div class="simon-button" id="button2"></div>
@@ -32,4 +55,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -24,7 +24,7 @@
 
 #game-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
 }
 
@@ -32,28 +32,40 @@
     width: 300px;
     height: 300px;
     position: relative;
-    margin: 2in auto 20px;
+    margin: 1in auto 20px;
     border-radius: 50%;
     box-sizing: border-box;
     transform: rotate(-30deg);
 }
 
-#start-button, #flash-speed, h3 {
+#start-button {
     width: 100px;
     height: 30px;
     margin-top: -50px;
     align-self: left;
     margin: 0 auto;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     transform: translateX(-6vw);
 }
 
+#flash-speed {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    top: 40%;        /* Moves the element down to the middle vertically */
+    left: 20%;         /* Aligns the element to the left edge of the screen */
+    transform: translateY(-50%); /* Shifts the element up by half of its height to center it vertically */
+    margin-bottom: 10px;
+}
+
 label[for="flash-speed"] {
+    position: absolute;
     display: block;
     font-size: 1.2em;
-    margin-bottom: 10px;
+    top: 37%;         /* Moves the label down to the middle vertically */
+    left: 20%;          /* Aligns the label to the left edge of the screen */
+    transform: translateY(-100%); /* Shifts the label up by its height to place it above the input element */
     text-align: center;
-    transform: translateX(-6vw);
 }
 
 #welcome-message {
@@ -129,4 +141,11 @@ label[for="flash-speed"] {
 
 #game-status {
     color: #2E8B57;
+}
+
+#high-score {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 10px;
+    transform: translateX(-6vw);
 }

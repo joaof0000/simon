@@ -3,8 +3,10 @@ let humanSequence = [];
 let level = 0;
 let gameStarted = false;
 let gameOver = false;
+let highScore = localStorage.getItem('highScore') || 0; // Declare highScore here so that it can be used in endGame() function
 const welcomeMessage = document.getElementById('welcome-message');  
 welcomeMessage.style.display = 'none'
+highScoreElement.style.display = 'none'; // Hide high score at the beginning
 
 // Define six different sounds
 const sounds = {
@@ -34,14 +36,19 @@ document.getElementById('start-button').addEventListener('click', startGame);
 function startGame() {
     sequence = [], humanSequence = [], level = 0;
     gameStarted = true, gameOver = false;
+    highScoreElement.style.display = 'none'; // Hide high score on game start
     renderWelcomeMessage();
     addToSequence();
     renderScore();
     renderGameStatus('Game is starting in 5 seconds...');
+    // Hide high score at the beginning of the game
+    document.getElementById('high-score').style.display = 'none';
+  
     setTimeout(() => {
         renderGameStatus('');
         playSequence();
     }, 5000);
+    
 }
 
 function renderWelcomeMessage() {
@@ -93,21 +100,36 @@ function humanTurn(color) {
         endGame();
     } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
         humanSequence = [], level++;
+        renderScore(); // This will now handle showing the score when level is greater than 0
         addToSequence();
         setTimeout(playSequence, 1000);
-        if (level === 5) renderGameStatus('Awesome work! You have reached level 5. Keep going!');
+        if (level === 5) renderGameStatus('Awesome work! You have reached a score of 5. Keep going!');
     }
 }
 
 function endGame() {
     gameStarted = false;
     gameOver = true;
-    
-    const scoreElement = document.getElementById('score');
-    scoreElement.style.display = 'none';
 
-    renderGameStatus(`Game over! You reached level ${level}.`);
+    // Hide the score
+    document.getElementById('score').style.display = 'none';
+    // Show high score when game ends
+    const highScoreElement = document.getElementById('high-score');
+    highScoreElement.style.display = 'block';
+    
+    if (level > highScore) {
+        highScore = level;
+        localStorage.setItem('highScore', highScore.toString());
+        renderGameStatus(`Well done! New Highest Score!: ${highScore}`);
+    } else {
+        renderGameStatus(`Game over! Your Final Score: ${level}.`);
+    }
+    
+    highScoreElement.textContent = 'Current High Score: ' + highScore;
+    document.getElementById('score').style.display = 'none';
 }
+
+
 
 function renderGameStatus(message) {
     const gameStatusElement = document.getElementById('game-status');
@@ -120,6 +142,11 @@ function renderGameStatus(message) {
 }
 
 function renderScore() {
-    document.getElementById('score').textContent = 'Score: ' + level;
+    const scoreElement = document.getElementById('score');
+    if (level > 0) {
+        scoreElement.style.display = 'block';
+        scoreElement.textContent = 'Score: ' + level;
+    } else {
+        scoreElement.style.display = 'none';
+    }
 }
-
