@@ -3,19 +3,19 @@ let humanSequence = [];
 let level = 0;
 let gameStarted = false;
 let gameOver = false;
-let turnTimeout;
 const welcomeMessage = document.getElementById('welcome-message');  
 welcomeMessage.style.display = 'none'
 
 // Define six different sounds
 const sounds = {
-    1: new Audio('camera_click.wav'),
-    2: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
-    3: new Audio('http://www.freesound.org/data/previews/58/58277_634166-lq.mp3'),
-    4: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3'),
-    5: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3'),
-    6: new Audio('http://www.freesound.org/data/previews/336/336899_4939433-lq.mp3')
+    1: new Audio('sounds/In Your Eyes.mp3'),
+    2: new Audio('sounds/01 The Best.mp3'),
+    3: new Audio('sounds/Jump.mp3'),
+    4: new Audio('sounds/Viva La Vida.mp3'),
+    5: new Audio('sounds/The Rhythm of the Night.mp3'),
+    6: new Audio('sounds/I Want To Know What Love Is.mp3')
 };
+
 
 // Generate a random number from 1 to 6
 const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
@@ -41,7 +41,6 @@ function startGame() {
     setTimeout(() => {
         renderGameStatus('');
         playSequence();
-        resetCountdown();
     }, 5000);
 }
 
@@ -69,8 +68,17 @@ const lightUp = (color) => {
     setTimeout(() => {
         button.classList.remove('active');
     }, 1500);
-    setTimeout(() => sounds[color].play(), 500);
+    
+    // Play the sound for only 1 second
+    const sound = sounds[color];
+    sound.currentTime = 0; // start playing from the beginning
+    sound.play();
+    setTimeout(() => {
+        sound.pause();
+        sound.currentTime = 0; // reset to the start for the next time
+    }, 1500); // stop playing after 1.5 second
 };
+
 
 const playSequence = () => {
     sequence.forEach((color, index) => {
@@ -81,21 +89,23 @@ const playSequence = () => {
 };
 
 function humanTurn(color) {
-    clearTimeout(turnTimeout);
     if (humanSequence[humanSequence.length - 1] !== sequence[humanSequence.length - 1]) {
         endGame();
     } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
         humanSequence = [], level++;
         addToSequence();
         setTimeout(playSequence, 1000);
-        if(level === 5) renderGameStatus('Awesome work! You have reached level 5. Keep going!');
-    } else {
-        turnTimeout = setTimeout(endGame, 10000);
+        if (level === 5) renderGameStatus('Awesome work! You have reached level 5. Keep going!');
     }
 }
 
 function endGame() {
-    gameStarted = false, gameOver = true;
+    gameStarted = false;
+    gameOver = true;
+    
+    const scoreElement = document.getElementById('score');
+    scoreElement.style.display = 'none';
+
     renderGameStatus(`Game over! You reached level ${level}.`);
 }
 
@@ -113,12 +123,3 @@ function renderScore() {
     document.getElementById('score').textContent = 'Score: ' + level;
 }
 
-// Reduce the sound effects to 1 second
-Object.values(sounds).forEach(sound => {
-    sound.onloadeddata = function() {
-        const duration = sound.duration;
-        if (duration > 1.0) {
-            sound.playbackRate = duration;
-        }
-    };
-});

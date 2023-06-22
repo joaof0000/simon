@@ -38,12 +38,13 @@
     transform: rotate(-30deg);
 }
 
-#start-button, #flash-speed {
+#start-button, #flash-speed, h3 {
     width: 100px;
     height: 30px;
     margin-top: -50px;
     align-self: left;
     margin: 0 auto;
+    margin-bottom: 50px;
     transform: translateX(-6vw);
 }
 
@@ -57,7 +58,7 @@ label[for="flash-speed"] {
 
 #welcome-message {
     width: 55%;
-    margin: 0 auto;
+    margin: 10 px auto;
     padding: 20px;
     background-color: #f8f9fa;
     color: #212529;
@@ -66,7 +67,7 @@ label[for="flash-speed"] {
     text-align: center;
     transform: translateX(-6vw);
     font-size: 1em;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .simon-button {
@@ -121,8 +122,8 @@ label[for="flash-speed"] {
 #score, #game-status {
     font-size: 1.5em;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     transform: translateX(-6vw);
 }
 
