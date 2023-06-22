@@ -1,12 +1,13 @@
+// Initialize game variables
 let sequence = [];
 let humanSequence = [];
 let level = 0;
 let gameStarted = false;
 let gameOver = false;
-let highScore = localStorage.getItem('highScore') || 0; // Declare highScore here so that it can be used in endGame() function
+
+// Hide welcome message initially
 const welcomeMessage = document.getElementById('welcome-message');  
 welcomeMessage.style.display = 'none'
-highScoreElement.style.display = 'none'; // Hide high score at the beginning
 
 // Define six different sounds
 const sounds = {
@@ -18,10 +19,10 @@ const sounds = {
     6: new Audio('sounds/I Want To Know What Love Is.mp3')
 };
 
-
-// Generate a random number from 1 to 6
+// Function to generate a random number between 1 and 6
 const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
 
+// Attach click listeners to the buttons
 for (let i = 1; i <= 6; i++) {
     document.getElementById(`button${i}`).addEventListener('click', () => {
         if (gameStarted && !gameOver) {
@@ -31,26 +32,34 @@ for (let i = 1; i <= 6; i++) {
     });
 }
 
+// Attach listener to the start button to begin the game
 document.getElementById('start-button').addEventListener('click', startGame);
 
+// Function to start the game
 function startGame() {
+    // Reset game variables
     sequence = [], humanSequence = [], level = 0;
     gameStarted = true, gameOver = false;
-    highScoreElement.style.display = 'none'; // Hide high score on game start
+    // Display the welcome message
     renderWelcomeMessage();
+
+    // Add the first item to the sequence
     addToSequence();
+
+    // Display the initial score
     renderScore();
+
+    // Notify the user that the game is about to start
     renderGameStatus('Game is starting in 5 seconds...');
-    // Hide high score at the beginning of the game
-    document.getElementById('high-score').style.display = 'none';
-  
+
+    // Start playing the sequence after 5 seconds
     setTimeout(() => {
         renderGameStatus('');
         playSequence();
     }, 5000);
-    
 }
 
+// Function to render the welcome message
 function renderWelcomeMessage() {
     welcomeMessage.style.display = 'block'
     welcomeMessage.textContent = 
@@ -63,15 +72,19 @@ document.getElementById('flash-speed').addEventListener('change', (event) => {
     document.documentElement.style.setProperty('--flash-speed', `${event.target.value}s`);
 });
 
-
+// Function to add a random number to the sequence
 function addToSequence() {
     sequence.push(getRandomNumber());
     renderScore();
 }
 
+// Function to light up a button and play the corresponding sound
 const lightUp = (color) => {
     const button = document.getElementById(`button${color}`);
+
     button.classList.add('active');
+
+    // Stop light after 1.5 seconds
     setTimeout(() => {
         button.classList.remove('active');
     }, 1500);
@@ -86,7 +99,7 @@ const lightUp = (color) => {
     }, 1500); // stop playing after 1.5 second
 };
 
-
+// Function to play the current sequence
 const playSequence = () => {
     sequence.forEach((color, index) => {
         setTimeout(() => {
@@ -95,42 +108,31 @@ const playSequence = () => {
     });
 };
 
+// Function to handle the player's turn
 function humanTurn(color) {
     if (humanSequence[humanSequence.length - 1] !== sequence[humanSequence.length - 1]) {
         endGame();
     } else if (humanSequence.length === sequence.length && humanSequence.length !== 0) {
         humanSequence = [], level++;
-        renderScore(); // This will now handle showing the score when level is greater than 0
         addToSequence();
         setTimeout(playSequence, 1000);
-        if (level === 5) renderGameStatus('Awesome work! You have reached a score of 5. Keep going!');
+        if (level === 5) renderGameStatus('Awesome work! You have reached level 5. Keep going!');
     }
 }
 
+// Function to handle game over
 function endGame() {
     gameStarted = false;
     gameOver = true;
+    
+    // Hide score and display game over message
+    const scoreElement = document.getElementById('score');
+    scoreElement.style.display = 'none';
 
-    // Hide the score
-    document.getElementById('score').style.display = 'none';
-    // Show high score when game ends
-    const highScoreElement = document.getElementById('high-score');
-    highScoreElement.style.display = 'block';
-    
-    if (level > highScore) {
-        highScore = level;
-        localStorage.setItem('highScore', highScore.toString());
-        renderGameStatus(`Well done! New Highest Score!: ${highScore}`);
-    } else {
-        renderGameStatus(`Game over! Your Final Score: ${level}.`);
-    }
-    
-    highScoreElement.textContent = 'Current High Score: ' + highScore;
-    document.getElementById('score').style.display = 'none';
+    renderGameStatus(`Game over! You reached level ${level}.`);
 }
 
-
-
+// Function to display messages to the user
 function renderGameStatus(message) {
     const gameStatusElement = document.getElementById('game-status');
     gameStatusElement.textContent = message;
@@ -141,12 +143,7 @@ function renderGameStatus(message) {
     }
 }
 
+// Function to render the current score
 function renderScore() {
-    const scoreElement = document.getElementById('score');
-    if (level > 0) {
-        scoreElement.style.display = 'block';
-        scoreElement.textContent = 'Score: ' + level;
-    } else {
-        scoreElement.style.display = 'none';
-    }
+    document.getElementById('score').textContent = 'Score: ' + level;
 }
